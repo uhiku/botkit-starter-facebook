@@ -45,7 +45,7 @@ module.exports = function(webserver, controller) {
                   "content_type":"text",
                   "title":"Invite somebody",
                   "payload":"refer"
-                },
+                }
               ]
             }
             // Send the message to acknowledge the postback
