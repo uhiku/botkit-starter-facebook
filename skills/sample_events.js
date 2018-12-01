@@ -20,9 +20,9 @@ module.exports = function(controller) {
         bot.reply(message, 'Cool sticker.');
     });
 
-    controller.on('image_received', function(bot, message) {
-        bot.reply(message, 'Nice picture.');
-    });
+    // controller.on('image_received', function(bot, message) {
+    //     bot.reply(message, 'Nice picture.');
+    // });
 
     controller.on('audio_received', function(bot, message) {
         bot.reply(message, 'I heard that!!');

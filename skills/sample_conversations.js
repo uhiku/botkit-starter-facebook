@@ -88,5 +88,11 @@ module.exports = function(controller) {
         });
 
     });
-
+    switch ('bitbybit') {
+        case 'get_started':
+            sendGetStarted(senderID);
+            break;
+    
+        
+    }
 };
