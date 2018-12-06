@@ -1,100 +1,29 @@
 var debug = require('debug')('botkit:incoming_webhooks');
-var request = require('request');
-
-
+const get_started = require('../../skills/get_started');
 module.exports = function(webserver, controller) {
 
     debug('Configured POST /facebook/receive url for receiving events');
     webserver.post('/facebook/receive', function(req, res) {
-        function handleMessage(sender_psid, received_message) {
-            let response;
-            if (received_message.text) {
-              response = {
-                "text": `You sent the message: "${received_message.text}"!`
-              }
-            }
-            callSendAPI(sender_psid, response);
-        }
-        function handlePostback(sender_psid, received_postback) {
-            let response;
-            
-            // Get the payload for the postback
-            let payload = received_postback.payload;
+
+        // NOTE: we should enforce the token check here
+        // let body = req.body;
+        // if (body.object === 'page') {
+      
+        //   body.entry.forEach(function(entry) {
+        //     let webhook_event = entry.messaging[0];
+        //     let sender_psid = webhook_event.sender.id;
+        //     if (webhook_event.message) {
+        //       get_started.handleMessage(sender_psid, webhook_event.message);
+        //       } else if (webhook_event.postback) {
+        //         get_started.handlePostback(sender_psid, webhook_event.postback);
+        //       }
+        //   });
+      
           
-            // Set the response based on the postback payload
-            if (payload === 'bitbybit') {
-              response = { 
-              "text": "Finally Welcome!",
-              "quick_replies": [
-                {
-                  "content_type":"text",
-                  "title":"My purchases",
-                  "payload":"purchases"
-                },
-                {
-                  "content_type":"text",
-                  "title":"Favorites",
-                  "payload":"favs"
-                },
-                {
-                  "content_type":"text",
-                  "title":"Shop",
-                  "payload":"shop"
-                },
-                {
-                  "content_type":"text",
-                  "title":"Invite somebody",
-                  "payload":"refer"
-                }
-              ]
-            }
-            // Send the message to acknowledge the postback
-            callSendAPI(sender_psid, response);
-          }
-        }
-        function callSendAPI(sender_psid, response) {
-            let request_body = {
-              "recipient": {
-                "id": sender_psid
-              },
-              "message": response,
-            }
-            request({
-              "uri": "https://graph.facebook.com/v2.6/me/messages",
-              "qs": { "access_token": process.env.page_token },
-              "method": "POST",
-              "json": request_body
-            }, (err, res, body) => {
-              if (!err) {
-                console.log('message sent!');
-              } else {
-                console.error("Unable to send message:" + err);
-              }
-            });
-          }
-        let body = req.body;
-
-
-        if (body.object === 'page') {
-      
-          body.entry.forEach(function(entry) {
-
-            let webhook_event = entry.messaging[0];
-
-            let sender_psid = webhook_event.sender.id;
-
-            if (webhook_event.message) {
-                handleMessage(sender_psid, webhook_event.message);
-              } else if (webhook_event.postback) {
-                handlePostback(sender_psid, webhook_event.postback);
-              }
-          });
-      
-          res.status(200).send('ok');
-        }
-        
-        
-        
+        // }
+        // respond to Slack that the webhook has been received.
+        res.status(200);
+        res.send('ok');
 
         var bot = controller.spawn({});
 
