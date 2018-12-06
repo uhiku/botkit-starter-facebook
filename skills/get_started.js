@@ -4,32 +4,34 @@ const response = () => {
     }
 
 module.exports = (controller) => {
-    controller.hears('Main Menu', 'message_received, facebook_postback', (bot, message) => {
-        bot.reply(message, {
-            "text": "Weclcome, I\'m machine intended to make your life easier. Choose what would you like to do =)",
-            "quick_replies": [
-                {
-                "content_type":"text",
-                "title":"My purchases",
-                "payload":"purchases"
-                },
-                {
-                "content_type":"text",
-                "title":"Favorites",
-                "payload":"favs"
-                },
-                {
-                "content_type":"text",
-                "title":"Shop",
-                "payload":"shop"
-                },
-                {
-                "content_type":"text",
-                "title":"Invite somebody",
-                "payload":"refer"
-                }
-            ]
-        })
+    controller.on('facebook_postback', (bot, message) => {
+        if (message.payload === 'bitbybit' || message.payload === 'main') {
+            bot.reply(message, {
+                "text": "Weclcome, I\'m machine intended to make your life easier. Choose what would you like to do =)",
+                "quick_replies": [
+                    {
+                    "content_type":"text",
+                    "title":"My purchases",
+                    "payload":"purchases"
+                    },
+                    {
+                    "content_type":"text",
+                    "title":"Favorites",
+                    "payload":"favs"
+                    },
+                    {
+                    "content_type":"text",
+                    "title":"Shop",
+                    "payload":"shop"
+                    },
+                    {
+                    "content_type":"text",
+                    "title":"Invite somebody",
+                    "payload":"refer"
+                    }
+                ]
+            })
+        }
     });
     controller.hears('shop', 'message_received, facebook_postback', (bot, message) => {
         bot.reply(message, {
