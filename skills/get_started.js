@@ -4,7 +4,7 @@ const response = () => {
     }
 
 module.exports = (controller) => {
-    controller.hears('bitbybit', 'message_received, facebook_postback', (bot, message) => {
+    controller.hears('Main Menu', 'message_received, facebook_postback', (bot, message) => {
         bot.reply(message, {
             "text": "Weclcome, I\'m machine intended to make your life easier. Choose what would you like to do =)",
             "quick_replies": [
